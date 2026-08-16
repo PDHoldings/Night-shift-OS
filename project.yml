@@ -1,0 +1,42 @@
+# XcodeGen spec — run `xcodegen generate` (brew install xcodegen) to produce
+# NightShiftOS.xcodeproj. The .xcodeproj is not committed; this file is the
+# source of truth for project structure.
+name: NightShiftOS
+options:
+  bundleIdPrefix: com.phanetics
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  RosterKit:
+    path: RosterKit
+targets:
+  NightShiftOS:
+    type: application
+    platform: iOS
+    sources:
+      - App
+      - Providers
+    dependencies:
+      - package: RosterKit
+    info:
+      path: App/Info.plist
+      properties:
+        UILaunchScreen: {}
+        NSUserNotificationsUsageDescription: Shift-aware reminders are computed from your roster.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.phanetics.nightshiftos
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
+  NightShiftOSUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - Tests/UITests
+    dependencies:
+      - target: NightShiftOS
